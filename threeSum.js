@@ -42,7 +42,7 @@ function threeNumberSum(array, targetSum) {
 
   let result = [];
 
-  for (let i = 0; i < array.length; i++) {
+  for (let i = 0; i < array.length - 2; i++) {
     let l = i + 1;
     let r = array.length - 1;
 

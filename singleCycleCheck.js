@@ -14,17 +14,14 @@ function hasSingleCycle(array) {
       return;
     }
 
-    let indexToCycleTo;
+    let indexToCycleTo = array[index] + index;
 
-    if (array[index] + index > array.length - 1) {
-      indexToCycleTo = index - array.length + array[index];
+    if (indexToCycleTo > array.length - 1) {
       while (indexToCycleTo > array.length - 1) {
         indexToCycleTo -= array.length;
       }
       dfs(array, indexToCycleTo);
-    } else if (array[index] + index < 0) {
-      let remainder = index + array[index];
-      indexToCycleTo = array.length + remainder;
+    } else if (indexToCycleTo < 0) {
       while (indexToCycleTo < 0) {
         indexToCycleTo += array.length;
       }
@@ -48,7 +45,6 @@ function hasSingleCycle(array) {
     return false;
   }
 }
-
 
 console.log(hasSingleCycle([2, 3, 1, -4, -4, 2])); // true
 debugger;

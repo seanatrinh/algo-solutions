@@ -31,6 +31,10 @@ approach:
     - if they add up to 0, push to result
     - otherwise move the pointers
 - return result
+
+complexity:
+time: O(n^2)
+space: O(n)
 */
 
 function threeNumberSum(array, targetSum) {

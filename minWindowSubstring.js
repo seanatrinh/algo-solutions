@@ -109,3 +109,4 @@ const test1 = {
   "smallString": "$$abf"
 };
 console.log(smallestSubstringContaining(test1.bigString, test1.smallString));
+console.log(smallestSubstringContaining('ADOBECODEBANC', 'ABC'));

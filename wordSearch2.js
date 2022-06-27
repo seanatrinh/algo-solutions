@@ -56,7 +56,7 @@ var findWords = function(board, words) {
                 for (const word of wordsSubarray) {
                     if (dfs(r, c, 0, word)) {
                         wordsOnBoard.push(word);
-                        wordsMap[board[r][c]] = wordsMap[board[r][c]].splice(indexOf(word), 1);
+                        wordsMap[board[r][c]] = wordsMap[board[r][c]].splice(wordsMap[board[r][c]].indexOf(word), 1);
                     }
                 }
             }

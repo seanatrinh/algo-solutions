@@ -1,3 +1,4 @@
+/* eslint-disable no-constant-condition */
 // Max Binary Heap
 class MaxBinaryHeap {
   constructor() {

@@ -1,35 +1,32 @@
 function merge(array1, array2) {
-  let results = [];
-
   let i = 0;
   let j = 0;
+  let result = [];
 
-  while (i < array1.length && j < array2.length) {
-    if (array2[j] > array1[i]) {
-      results.push(array1[i]);
+  while (i < array1.length || j < array2.length) {
+    if (array1[i] <= array2[j]) {
+      result.push(array1[i]);
       i++;
-    } else {
-      results.push(array2[j]);
+    } else if (array1[i] > array2[j]) {
+      result.push(array2[j]);
       j++;
-    }
-    while (i < array1.length) {
-      results.push(array1[i]);
+    } else if (array2[j] === undefined) {
+      result.push(array1[i]);
       i++;
-    }
-    while (j < array2.length) {
-      results.push(array2[j]);
+    } else if (array1[i] === undefined) {
+      result.push(array2[j]);
       j++;
     }
   }
-
-  return results;
+  return result;
 }
 
 function mergeSort(array) {
   if (array.length <= 1) return array;
+
   let mid = Math.floor(array.length / 2);
   let left = mergeSort(array.slice(0, mid));
-  let right = mergeSort(array.slice(mid));
+  let right = mergeSort(array.slice(mid, array.length));
 
   return merge(left, right);
 }

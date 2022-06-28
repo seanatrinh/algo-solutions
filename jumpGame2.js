@@ -1,4 +1,6 @@
 function jumpGame2(array) {
+  if (array.length <= 1) return 0;
+
   let jumps = 0;
   let steps = array[0];
   let maxSteps = array[0];

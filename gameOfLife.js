@@ -40,3 +40,6 @@ var gameOfLife = function(board) {
         board[x][y] = state;
     }
 };
+
+console.log(gameOfLife([[0,1,0],[0,0,1],[1,1,1],[0,0,0]]));
+// output: [[0,1,0],[0,0,1],[1,1,1],[0,0,0]]

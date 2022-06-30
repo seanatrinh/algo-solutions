@@ -128,7 +128,6 @@ let board2 = [
   }
 
   function isItemInArray(item, array) {
-    // console.log(item, array);
     if (!Array.isArray(array)) return false;
 
     for (const val of array) {

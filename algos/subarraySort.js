@@ -8,6 +8,17 @@
   If the input array is already sorted, the function should return [-1, -1]
 
   [1, 2, 4, 7, 10, 11, 7, 12, 6, 7, 16, 18, 19] => [3, 9]
+
+  approach:
+  iterate through the input array and find unsorted numbers
+  get the smallest and largest unsorted numbers
+
+  iterate from the left of the input array to find the index where the smallest number should be placed
+    the smallest number should be placed where it is less than array[i]
+  iterate from the right of the input array to find the index where the largest numbers hould be placed
+    the largest number should be placed where it is greater than array[j]
+
+  return [smallidx, largeidx]
 */
 
 function subarraySort(array) {

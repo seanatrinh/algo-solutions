@@ -11,9 +11,9 @@ approach:
 var groupAnagrams = function(strs) {
   let result = {};
 
-  for (str of strs) {
+  for (const str of strs) {
       let charCount = new Array(26).fill(0);
-      for (char of str) {
+      for (const char of str) {
           charCount[char.charCodeAt() - 'a'.charCodeAt()] += 1;
       }
       let charHash = charCount.join('#');

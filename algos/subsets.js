@@ -10,9 +10,9 @@ function subsets(nums) {
     }
     // include nums[i]
     subset.push(nums[i]);
-    dfs(i + 1);
+    dfs(i + 1); // if input array is [1,2,3], then [1,2,3] will be generated first
     // don't include nums[i];
-    subset.pop();
+    subset.pop(); // then 3 will be popped, and [1, 2] will be generated
     dfs(i + 1);
   }
   dfs(0);
@@ -20,6 +20,28 @@ function subsets(nums) {
   return res;
 }
 
+/*
+[1,2,3]
+
+dfs(0)
+[1]
+dfs(1) **
+[1, 2]
+dfs(2) *
+[1, 2, 3]
+dfs(3) => push [1, 2, 3], return
+pop 3, subset is now => [1, 2]
+dfs(3) => push [1, 2], return
+* come back to EC on line 30
+pop 2, subset is now => [1]
+dfs(3) => push [1], return
+** come back to EC on line 28
+pop 1, subset is now => []
+dfs(2)
+[3]
+
+*/
+debugger;
 console.log(subsets([1,2,3]))
 
 // dfs, no backtracking

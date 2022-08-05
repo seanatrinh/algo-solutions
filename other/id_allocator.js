@@ -1,3 +1,19 @@
+/*
+Create an ID allocator with an allocate and release method
+
+allocate
+- allocates the next available ID. if there is no next available ID, the queue will be checked.
+- logic related to release:
+  - if we're able to allocate an ID, we need to add the ID to a hashMap so we know we've allocated it
+
+release
+- check if the ID being asked to be released is...
+  - within range of valid IDs (greater than or equal to zero, less than or equal to max val)
+  - has been allocated
+- if above is true,
+  - delete the id being released from our allocated hash map
+  - add the released id to the queue, so it can be allocated
+*/
 class Allocator {
   constructor(max_val) {
     this.queue = [];

@@ -21,24 +21,7 @@ function subsets(nums) {
 }
 
 /*
-[1,2,3]
 
-dfs(0)
-[1]
-dfs(1) **
-[1, 2]
-dfs(2) *
-[1, 2, 3]
-dfs(3) => push [1, 2, 3], return
-pop 3, subset is now => [1, 2]
-dfs(3) => push [1, 2], return
-* come back to EC on line 30
-pop 2, subset is now => [1]
-dfs(3) => push [1], return
-** come back to EC on line 28
-pop 1, subset is now => []
-dfs(2)
-[3]
 
 */
 debugger;

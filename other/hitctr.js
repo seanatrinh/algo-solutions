@@ -1,3 +1,5 @@
+// LeetCode #362
+
 class HitCounter {
   constructor() {
     this.timeModCountMap = {};

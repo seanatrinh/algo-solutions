@@ -15,37 +15,42 @@ release
   - add the released id to the queue, so it can be allocated
 */
 class Allocator {
-  constructor(max_val) {
-    this.queue = [];
+  constructor(max_id) {
+    this.max_id = max_id;
+    this.allocated_ids = {};
+    this.released_ids = [];
     this.next_id = 0;
-    this.allocated = {};
-    this.max_val = max_val;
   }
 
   allocate() {
-    let result = null;
+    let id = null;
 
-    if (this.next_id <= this.max_val) {
-      result = this.next_id;
+    if (this.next_id <= this.max_id) {
+      id = this.next_id;
       this.next_id += 1;
-    } else if (this.queue.length > 0) {
-      result = this.queue.shift();
+    } else if (this.released_ids.length > 0) {
+      id = this.released_ids.pop();
     }
 
-    if (result === null) {
-      console.error("ERROR: No IDs available to allocate. Release IDs to allocate more.");
+    if (id !== null) {
+      this.allocated_ids[id] = true;
+      return id;
     } else {
-      this.allocated[result] = true;
-      return result;
+      console.error("Error: No IDs left to allocate.");
     }
   }
 
   release(id) {
-    if (id > this.max_val || !(id >= 0) || !(id in this.allocated)) {
-      console.error(`ERROR: The ID ${id} cannot be relased.`);
+    if (this.isValidID(id) && this.allocated_ids[id]) {
+      delete this.allocated_ids[id];
+      this.released_ids.push(id);
+    } else {
+      console.error(`Error: Cannot release ID ${id}.`);
     }
-    delete this.allocated[id];
-    this.queue.push(id);
+  }
+
+  isValidID(id) {
+    return typeof id === "number" && id >= 0 && id <= this.max_id;
   }
 }
 // debugger;

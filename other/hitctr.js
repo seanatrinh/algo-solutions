@@ -2,34 +2,39 @@
 
 class HitCounter {
   constructor() {
-    this.timeModCountMap = {};
+    this.tsModHash = {};
   }
 
   hit(timestamp) {
     let tsMod = timestamp % 300;
-    if (!(tsMod in this.timeModCountMap)) {
-      this.timeModCountMap[tsMod] = {timestamp: timestamp, hits: 1};
+
+    if (!(tsMod in this.tsModHash)) {
+      this.tsModHash[tsMod] = {
+        recent_ts: timestamp,
+        hits: 1
+      };
     } else {
-      if (timestamp === this.timeModCountMap[tsMod].timestamp) {
-        this.timeModCountMap[tsMod].hits += 1;
+      if (this.tsModHash[tsMod].recent_ts === timestamp) {
+        this.tsModHash[tsMod].hits += 1;
       } else {
-        this.timeModCountMap[tsMod].timestamp = timestamp;
-        this.timeModCountMap[tsMod].hits = 1;
+        this.tsModHash[tsMod].recent_ts = timestamp;
+        this.tsModHash[tsMod].hits = 1;
       }
     }
+
   }
 
   getHits(timestamp) {
-    let totalHits = 0;
+    let total_hits = 0;
 
-    for (const tsMod in this.timeModCountMap) {
-      let timestampMetadata = this.timeModCountMap[tsMod];
-      if (timestampMetadata.timestamp > timestamp - 300) {
-        totalHits += timestampMetadata.hits;
+    for (const tsMod in this.tsModHash) {
+      const {recent_ts, hits} = this.tsModHash[tsMod];
+      if (recent_ts > timestamp - 300) {
+        total_hits += hits;
       }
     }
 
-    return totalHits;
+    return total_hits;
   }
 }
 

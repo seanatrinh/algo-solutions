@@ -32,11 +32,11 @@ class Allocator {
       result = this.queue.shift();
     }
 
-    if (result !== null) {
+    if (result === null) {
+      console.error("ERROR: No IDs available to allocate. Release IDs to allocate more.");
+    } else {
       this.allocated[result] = true;
       return result;
-    } else {
-      console.error("ERROR: No IDs available to allocate. Release IDs to allocate more.");
     }
   }
 

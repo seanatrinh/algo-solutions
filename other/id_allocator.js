@@ -41,7 +41,7 @@ class Allocator {
   }
 
   release(id) {
-    if (this.isValidID(id) && this.allocated_ids[id]) {
+    if (this.isValidID(id) && this.allocated_ids[id] === true) {
       delete this.allocated_ids[id];
       this.released_ids.push(id);
     } else {

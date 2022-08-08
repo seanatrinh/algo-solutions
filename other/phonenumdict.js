@@ -86,6 +86,38 @@ console.log(phoneNumberDictionary('3767269', dictionary));
 //   }
 // }
 
+/*
+PRACTICE
+*/
+
+// function pnd(string, dictionary) {
+//   let result = {};
+//   let subset = [];
+
+//   const generateSubsets = (idx) => {
+//     if (idx === string.length) {
+//       let potentialWord = subset.join('');
+//       if (potentialWord in dictionary && !(potentialWord in result)) {
+//         result[potentialWord] = true;
+//       }
+//       return;
+//     }
+
+//     let letters = NUMBER_MAP[string[idx]];
+
+//     for (const letter of letters) {
+//       subset.push(letter);
+//       generateSubsets(idx + 1);
+//       subset.pop();
+//       generateSubsets(idx + 1);
+//     }
+//   }
+
+//   generateSubsets(0);
+
+//   return Object.keys(result);
+// }
+
 
 
 

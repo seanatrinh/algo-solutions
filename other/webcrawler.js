@@ -51,3 +51,39 @@ function get_html_content(url) {
 function get_links_on_page(html) {
 
 }
+
+class WC {
+  constructor(url) {
+    this.visited = {};
+    this.queue = [url];
+  }
+
+  async run() {
+    try {
+      while (this.queue.length > 0) {
+        let url = this.queue.pop();
+        await this.process_url(url);
+      }
+      return Object.keys(this.visited);
+    } catch(error) {
+      console.error(error);
+    }
+  }
+
+  async process_url(url) {
+    try {
+      let html = await get_html_content(url);
+      let links = get_links_on_page(html);
+
+      for (const link of links) {
+        if (!(link in this.visited)) {
+          this.queue.unshift(link);
+          this.visited[link] = true;
+        }
+      }
+
+    } catch(error) {
+      console.error(error);
+    }
+  }
+}

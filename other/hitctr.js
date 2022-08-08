@@ -46,3 +46,57 @@ console.log(myHitCounter.getHits(4)); // 3
 myHitCounter.hit(300);
 console.log(myHitCounter.getHits(300)); // 4
 console.log(myHitCounter.getHits(301)); // 3. hit at 1 doesn't count since we're only counting past 5 mins
+
+class HC {
+  constructor() {
+    this.tsModHash = {};
+  }
+
+  hit(timestamp) {
+    let tsMod = timestamp % 300;
+    if (tsMod in this.tsModHash) {
+      const {recent_ts} = this.tsModHash[tsMod];
+      if (recent_ts === timestamp) {
+        this.tsModHash[tsMod].hits += 1;
+      } else {
+        this.tsModHash[tsMod].recent_ts += timestamp;
+        this.tsModHash[tsMod].hits = 1;
+
+      }
+    } else {
+      this.tsModHash[tsMod] = {
+        recent_ts: timestamp,
+        hits: 1
+      }
+    }
+  }
+  /*
+  1
+  2
+  3
+  300
+  gethits 300 => 4
+  301
+  gethits 301 => 3
+
+  why? exclude 1
+
+  1 > 301 - 300
+  2 > 301 - 300
+  recent_ts > timestamp - 300
+  */
+
+  getHits(timestamp) {
+    let total = 0;
+
+    for (const tsMod in this.tsModHash) {
+      const {recent_ts, hits} = this.tsModHash[tsMod];
+
+      if (recent_ts > timestamp - 300) {
+        total += hits;
+      }
+    }
+
+    return total;
+  }
+}

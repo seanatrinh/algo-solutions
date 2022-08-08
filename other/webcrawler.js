@@ -13,6 +13,20 @@ class Webcrawler {
     this.url_queue = [url];
   }
 
+  async run() {
+    try {
+      while (this.url_queue.length > 0) {
+        const current_url = this.url_queue.pop();
+        await this.process_url(current_url);
+      }
+
+      return Object.keys(this.visited_urls);
+
+    } catch(error) {
+      console.error(`ERROR: ${error}`);
+    }
+  }
+
   async process_url(url) {
     try {
       const html = await get_html_content(url);
@@ -27,15 +41,6 @@ class Webcrawler {
     } catch(error) {
       console.error(`ERROR: ${error}`);
     }
-  }
-
-  async run() {
-    while (this.url_queue.length > 0) {
-      const current_url = this.url_queue.pop();
-      await this.process_url(current_url);
-    }
-
-    return Object.keys(this.visited_urls);
   }
 }
 

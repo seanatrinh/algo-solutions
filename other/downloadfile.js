@@ -84,3 +84,47 @@ myDownloader.addBlock({start: 1, end: 1});
 myDownloader.addBlock({start: 1, end: 5});
 myDownloader.addBlock({start: 3, end: 10});
 console.log(myDownloader.isDone());
+
+
+function isFileDone2(chunks, size) {
+  if (chunks.length === 0 || chunks === null) return false;
+  chunks.sort((a, b) => a.start - b.start);
+  if (chunks[0].start !== 0 || chunks[chunks.length - 1].end !== size) return false;
+
+  let final = chunks[0];
+
+  for (let i = 1; i < chunks.length; i++) {
+    const {start, end} = chunks[i];
+
+    if (final.end < start) {
+      return false;
+    } else {
+      final.end = Math.max(final.end, end);
+    }
+  }
+
+
+  return final.end === size;
+}
+
+class DL {
+  constructor(size) {
+    this.size = size;
+    this.chunks = [];
+  }
+
+  addBlock(chunk) {
+    this.chunks.push(chunk);
+    this.chunks.sort((a, b) => (a.start - b.start));
+
+    if (this.chunks.length > 1) {
+      let smallestStart = this.chunks.shift();
+      while (this.chunks.length !== 0 && smallestStart.end >= this.chunks.length[0].start) {
+        let mergableChunk = this.chunks.shift();
+        smallestStart.end = Math.max(smallestStart.end, mergableChunk.end);
+      }
+      this.chunks.push(smallestStart);
+    }
+  }
+
+}

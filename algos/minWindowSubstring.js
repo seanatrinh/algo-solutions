@@ -110,3 +110,86 @@ const test1 = {
 };
 console.log(smallestSubstringContaining(test1.bigString, test1.smallString));
 console.log(smallestSubstringContaining('ADOBECODEBANC', 'ABC'));
+
+// attempt Aug 15, 2022
+
+function minWindow(main, sub) {
+  if (!main || ! sub || sub.length > main.length) return '';
+
+  let subMap = generateMap(sub);
+  let resultIdx = [0, Infinity];
+  let uniqueChars = Object.keys(subMap).length;
+  let matches = 0;
+  let l = 0;
+  let r = 0;
+  let currentMap = {};
+
+  while (r < main.length) {
+      let rightLetter = main[r];
+
+      if (!(rightLetter in subMap)) {
+          r++;
+          continue;
+      }
+
+      if (rightLetter in currentMap) {
+          currentMap[rightLetter] += 1;
+      } else {
+          currentMap[rightLetter] = 1;
+      }
+
+      if (currentMap[rightLetter] === subMap[rightLetter]) {
+          matches += 1;
+      }
+
+      while (matches === uniqueChars && l <= r) {
+          let leftLetter = main[l];
+          if (!(leftLetter in subMap)) {
+              l++;
+              continue;
+          }
+
+          if ((r - l) < (resultIdx[1] - resultIdx[0])) {
+              resultIdx = [l , r];
+          }
+
+          // this is the line that I mess up on
+          // usually i say if (currentMap[leftLetter] !== subMap[leftLetter])
+          // this is wrong because we can have a SURPLUS of matches ...
+          /*
+           currentMap: a : 10
+           subMap: a : 5
+
+           in this example above, currentMap does not equal subMap
+           but there are still enough letters in currentMap to meet subMap's needs
+
+           therefore, we need the below condition.
+          */
+          if (currentMap[leftLetter] === subMap[leftLetter]) {
+              matches -= 1;
+          }
+
+          currentMap[leftLetter] -= 1;
+
+          l += 1;
+      }
+
+      r += 1;
+  }
+  return resultIdx[1] === Infinity ? '' : main.slice(resultIdx[0], resultIdx[1] + 1);
+
+}
+
+function generateMap(str) {
+  let res = {};
+
+  for (const letter of str) {
+      if (letter in res) {
+          res[letter] += 1;
+      } else {
+          res[letter] = 1;
+      }
+  }
+
+  return res;
+}
